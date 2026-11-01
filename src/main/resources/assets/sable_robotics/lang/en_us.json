@@ -1,0 +1,8 @@
+{
+  "itemGroup.sable_robotics.sable_robotics": "Sable Robotics",
+  "section.sable_robotics.control": "Control",
+  "block.sable_robotics.example_block": "Example Block",
+  "item.sable_robotics.example_item": "Example Item",
+  "item.sable_robotics.gary" : "GARY, The all knowing wizard",
+  "itemGroup.sable_robotics.gary": "Gary"
+}

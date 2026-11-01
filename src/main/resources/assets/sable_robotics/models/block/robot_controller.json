@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "sable_robotics:block/robot_controller/sides",
+    "north": "sable_robotics:block/robot_controller/front",
+    "south": "sable_robotics:block/robot_controller/sides",
+    "east": "sable_robotics:block/robot_controller/sides",
+    "west": "sable_robotics:block/robot_controller/sides",
+    "up": "sable_robotics:block/robot_controller/top",
+    "down": "sable_robotics:block/robot_controller/bottom"
+  }
+}
