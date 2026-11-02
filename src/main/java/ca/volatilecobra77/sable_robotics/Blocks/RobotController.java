@@ -4,6 +4,10 @@ import ca.volatilecobra77.sable_robotics.Blocks.Entities.RobotControllerBe;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -13,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class RobotController extends BaseEntityBlock implements EntityBlock {
@@ -58,5 +63,22 @@ public class RobotController extends BaseEntityBlock implements EntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            BlockHitResult hit
+    ) {
+        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            if (level.getBlockEntity(pos) instanceof RobotControllerBe be) {
+                serverPlayer.openMenu(be, buf -> buf.writeBlockPos(pos));
+            }
+        }
+
+        return InteractionResult.SUCCESS;
     }
 }

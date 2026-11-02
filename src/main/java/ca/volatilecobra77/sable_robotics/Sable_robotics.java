@@ -3,6 +3,7 @@ package ca.volatilecobra77.sable_robotics;
 import ca.volatilecobra77.sable_robotics.Blocks.Entities.ModBlockEntities;
 import ca.volatilecobra77.sable_robotics.Blocks.ModBlocks;
 import ca.volatilecobra77.sable_robotics.Items.ModItems;
+import ca.volatilecobra77.sable_robotics.Menus.ModMenus;
 import com.mojang.logging.LogUtils;
 import net.mcexpanded.fancytabsections.FancyTabSections;
 import net.mcexpanded.fancytabsections.Section.SectionColored;
@@ -85,6 +86,8 @@ public class Sable_robotics {
         ModItems.ITEMS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
+
+        ModMenus.register(modEventBus);
 
         ModCreativeModeTabs.regsiter(modEventBus);
         ModCreativeModeTabs.registerTabSections();
