@@ -2,6 +2,7 @@ package ca.volatilecobra77.sable_robotics;
 
 import ca.volatilecobra77.sable_robotics.Blocks.Entities.ModBlockEntities;
 import ca.volatilecobra77.sable_robotics.Blocks.ModBlocks;
+import ca.volatilecobra77.sable_robotics.Graph.Nodes.NodeRegistry;
 import ca.volatilecobra77.sable_robotics.Items.ModItems;
 import ca.volatilecobra77.sable_robotics.Menus.ModMenus;
 import com.mojang.logging.LogUtils;
@@ -89,6 +90,8 @@ public class Sable_robotics {
 
         ModMenus.register(modEventBus);
 
+        NodeRegistry.registerBuiltinNodes();//Register builtin graph nodes to the node registry
+
         ModCreativeModeTabs.regsiter(modEventBus);
         ModCreativeModeTabs.registerTabSections();
 
@@ -102,14 +105,14 @@ public class Sable_robotics {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+//        // Some common setup code
+//        LOGGER.info("HELLO FROM COMMON SETUP");
+//
+//        if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
+//
+//        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
+//
+//        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     // Add the example block item to the building blocks tab

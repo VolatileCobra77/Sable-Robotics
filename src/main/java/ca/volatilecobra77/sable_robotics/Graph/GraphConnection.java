@@ -4,9 +4,9 @@ import java.util.UUID;
 
 public record GraphConnection(
         UUID source,
-        String sourcePort,
+        NodePort sourcePort,
         UUID target,
-        String targetPort,
+        NodePort targetPort,
         GraphDataType type
 ) {
 
