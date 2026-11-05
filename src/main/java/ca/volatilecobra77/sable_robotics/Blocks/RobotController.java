@@ -4,7 +4,9 @@ import ca.volatilecobra77.sable_robotics.Blocks.Entities.RobotControllerBe;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -39,6 +41,13 @@ public class RobotController extends BaseEntityBlock implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        RobotControllerBe blockEntity = (RobotControllerBe) level.getBlockEntity(pos);
+        if (blockEntity == null) return;
+        blockEntity.tick(level,random, state);
     }
 
     @Override

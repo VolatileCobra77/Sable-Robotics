@@ -1,10 +1,11 @@
 package ca.volatilecobra77.sable_robotics.Graph.Nodes;
 
-import ca.volatilecobra77.sable_robotics.Graph.Nodes.Data.BaseDataNode;
+import ca.volatilecobra77.sable_robotics.Graph.Nodes.Data.ConstantNode;
+import ca.volatilecobra77.sable_robotics.Graph.Nodes.Data.MathAddNode;
 import ca.volatilecobra77.sable_robotics.Graph.Nodes.Exec.BaseExecNode;
+import ca.volatilecobra77.sable_robotics.Graph.Nodes.Exec.DebugLogNode;
 import ca.volatilecobra77.sable_robotics.Graph.Nodes.Exec.UpdateNode;
 import ca.volatilecobra77.sable_robotics.Graph.RobotNode;
-import ca.volatilecobra77.sable_robotics.Sable_robotics;
 import net.neoforged.fml.loading.FMLEnvironment;
 
 import java.util.Collection;
@@ -20,8 +21,8 @@ public class NodeRegistry {
         if (annotation == null) {
             throw new IllegalArgumentException(String.format("Class %s must have a @RobotNode annotation to be registered as a node", clazz.getName()));
         };
-        if (!BaseExecNode.class.isAssignableFrom(clazz) && !BaseDataNode.class.isAssignableFrom(clazz)){
-            throw new IllegalArgumentException(String.format("Class %s must extend BaseExecNode or BaseDataNode", clazz.getName()));
+        if (!GraphNode.class.isAssignableFrom(clazz)){
+            throw new IllegalArgumentException(String.format("Class %s must extend GraphNode", clazz.getName()));
         }
         try {
             GraphNode instance = clazz.getDeclaredConstructor().newInstance();
@@ -43,10 +44,10 @@ public class NodeRegistry {
     }
     public static void registerBuiltinNodes() {
         NodeRegistry.register(UpdateNode.class);
-        //NodeRegistry.register(ConstantNode.class);
-        //NodeRegistry.register(MathAddNode.class);
+        NodeRegistry.register(ConstantNode.class);
+        NodeRegistry.register(MathAddNode.class);
         if (!FMLEnvironment.production) { //Register dev nodes, if you're reading this, feel free to enable this and recompile if you for some reason want these in your prod build
-            //NodeRegistry.register(DebugLoggerNode.class);
+            NodeRegistry.register(DebugLogNode.class);
         }
 
     }

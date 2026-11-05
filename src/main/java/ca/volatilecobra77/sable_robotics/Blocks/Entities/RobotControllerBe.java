@@ -1,13 +1,16 @@
 package ca.volatilecobra77.sable_robotics.Blocks.Entities;
 
+import ca.volatilecobra77.sable_robotics.Config;
 import ca.volatilecobra77.sable_robotics.Graph.RobotGraph;
 import ca.volatilecobra77.sable_robotics.Menus.RobotControllerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -25,5 +28,8 @@ public class RobotControllerBe extends BlockEntity implements MenuProvider {
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
         return new RobotControllerMenu(containerId, inventory, this);
+    }
+    public void tick(Level level, RandomSource random, BlockState blockState){
+        if (level.getGameTime() % Config.graphUpdateInterval == 0) graph.execute(); //execute the graph once per update tick
     }
 }

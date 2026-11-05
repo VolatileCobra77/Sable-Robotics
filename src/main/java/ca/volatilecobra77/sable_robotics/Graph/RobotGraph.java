@@ -4,6 +4,7 @@ import ca.volatilecobra77.sable_robotics.Blocks.Entities.RobotControllerBe;
 import ca.volatilecobra77.sable_robotics.Config;
 import ca.volatilecobra77.sable_robotics.Graph.Nodes.Exec.BaseExecNode;
 import ca.volatilecobra77.sable_robotics.Graph.Nodes.GraphNode;
+import ca.volatilecobra77.sable_robotics.Graph.Nodes.Ports.NodePort;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ public class RobotGraph {
     private Logger LOGGER = Logger.getLogger(RobotGraph.class.getName());
     private List<UUID> startNodes;
     private boolean dirty;
+    private int graphTick;
     public RobotGraph(RobotControllerBe blockEntity) {
         this.blockEntity = blockEntity;
     }
@@ -67,16 +69,22 @@ public class RobotGraph {
     /**Called once per interval, set by the graph update interval config
      *  will not execute if the graph is dirty, FindStartNodes must be called before, when the graph editor closes or when a save event is triggered
      */
+
+    public void resetGraphTick(){
+        graphTick = 0;
+    }
     public void execute(){
         if (dirty) {
             LOGGER.warning("Attempting to operate on dirty graph at " + blockEntity.getBlockPos() + " something is not right, FindStartNodes was not executed for some reason");
         }; //never operate on a dirty graph, only operate after the graph has been sorted to find the start nodes of each tree
+        graphTick ++;
+        GraphExecutionContext context = new GraphExecutionContext(blockEntity,graphTick, connections,nodes);
         Queue<BaseExecNode> queue = new LinkedList<>();
         queue.addAll(getExecNodes());
         int execBudget = Config.graphExecBudget;
         while(!queue.isEmpty() && execBudget-- > 0){
             BaseExecNode node = queue.poll();
-            node.tick(connections); //this calls the WHOLE tree from that baseExecNode
+            node.tick(context); //this calls the WHOLE tree from that baseExecNode
         }
         if (!queue.isEmpty()) {
             LOGGER.warning("Exec budget exhausted for graph at " + blockEntity.getBlockPos() + " either increase GraphExecBudget config or decrease the number of exec nodes in the graph");

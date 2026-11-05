@@ -1,29 +1,27 @@
-package ca.volatilecobra77.sable_robotics.Graph;
+package ca.volatilecobra77.sable_robotics.Graph.Nodes.Ports;
+
+import ca.volatilecobra77.sable_robotics.Graph.GraphDataType;
+import ca.volatilecobra77.sable_robotics.Graph.GraphExecutionContext;
 
 import java.util.UUID;
 
-public class NodePort {
+public abstract class NodePort {
     private final GraphDataType type;
     private final String name;
     private final UUID parentNode;
     protected final boolean input;
     private final int id;
-    protected Object data;
-
     public NodePort(
             GraphDataType type,
             String name,
             UUID parentNode,
             boolean input,
-            int id,
-            Object data
-    ) {
+            int id) {
         this.type = type;
         this.name = name;
         this.parentNode = parentNode;
         this.input = input;
         this.id = id;
-        this.data = data;
     }
 
     public GraphDataType type() {
@@ -46,11 +44,5 @@ public class NodePort {
         return id;
     }
 
-    public Object data() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
+    public abstract Object data(GraphExecutionContext context);
 }
